@@ -1,0 +1,6 @@
+# Tenant: Daily Celebrity Shorts
+language: en
+persona: gossip_queen
+platforms:
+  youtube: true
+  tiktok: true

@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    expose:
+      - "8000"
+    volumes:
+      - ./backend:/app
+      - backend-outputs:/app/outputs
+      - backend-uploads:/app/uploads
+    environment:
+      - DATABASE_URL=sqlite:///./sql_app.db
+    networks:
+      - app-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 1G
+
+  frontend:
+    build: ./frontend
+    expose:
+      - "3000"
+    # volumes:
+    #   - ./frontend:/app
+    #   - /app/node_modules
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  backend-data:
+  backend-outputs:
+  backend-uploads:

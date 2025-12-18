@@ -1,0 +1,19 @@
+video:
+  stock_provider: "pexels"
+  pexels_api_key: "YOUR_PEXELS_KEY"
+  
+  resolution:
+    shorts: [720, 1280]
+    long: [1280, 720]
+    
+  subtitle_settings:
+    font: "Arial-Bold"
+    fontsize: 50
+    color: "white"
+    stroke_color: "black"
+    stroke_width: 2
+
+thumbnail:
+  provider: "comfyui"
+  api_url: "http://127.0.0.1:8188"
+  default_prompt: "high quality, youtube thumbnail, 4k, celebrity gossip, shocking, vivid colors"

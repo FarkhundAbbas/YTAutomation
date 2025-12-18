@@ -1,0 +1,13 @@
+flask
+celery
+redis
+feedparser
+newspaper3k
+moviepy
+requests
+sentence-transformers
+peewee
+pyyaml
+schedule
+colorlog
+python-dotenv

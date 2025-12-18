@@ -1,0 +1,11 @@
+<189>1 2025-01-01T12:00:00Z host app - - Failed login for user john from 10.0.0.1 reason=invalid_password
+<189>1 2025-01-01T12:05:00Z host app - - Failed login for user jane from 10.0.0.5 reason=invalid_password
+<189>1 2025-01-01T12:10:00Z host app - - Failed login for user bob from 10.0.0.10 reason=account_locked
+{"@timestamp":"2025-01-01T12:00:00Z","msg":"user login failed","user":"alice","ip":"10.0.0.15","code":401}
+{"@timestamp":"2025-01-01T12:15:00Z","msg":"user login failed","user":"charlie","ip":"10.0.0.20","code":401}
+2025/01/01 12:00:00 [app] User:robin ip-10-0-0-25 Failed auth
+2025/01/01 12:05:00 [app] User:diane ip-10-0-0-30 Failed auth
+2025/01/01 12:10:00 [app] User:frank ip-10-0-0-35 Failed auth attempt
+Jan  1 12:00:00 server sshd[1234]: Failed password for invalid user test from 192.168.1.100 port 22 ssh2
+Jan  1 12:05:00 server sshd[1235]: Failed password for invalid user admin from 192.168.1.101 port 22 ssh2
+Jan  1 12:10:00 server sshd[1236]: Failed password for root from 192.168.1.102 port 22 ssh2

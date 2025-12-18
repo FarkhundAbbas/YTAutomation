@@ -1,0 +1,11 @@
+trend_settings:
+  min_mentions: 3
+  time_window_hours: 24
+  keywords:
+    - "shocking"
+    - "reveal"
+    - "secret"
+    - "relationship"
+    - "breakup"
+    - "spotted"
+    - "viral"

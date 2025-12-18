@@ -1,0 +1,13 @@
+sources:
+  - name: "TMZ"
+    url: "https://www.tmz.com/rss.xml"
+    enabled: true
+    category: "celebrity"
+  - name: "Page Six"
+    url: "https://pagesix.com/feed/"
+    enabled: true
+    category: "celebrity"
+  - name: "Daily Mail TV Showbiz"
+    url: "https://www.dailymail.co.uk/tvshowbiz/index.rss"
+    enabled: true
+    category: "celebrity"

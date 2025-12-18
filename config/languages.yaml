@@ -1,0 +1,13 @@
+languages:
+  en:
+    name: "English"
+    tts_code: "en"
+    enabled: true
+  es:
+    name: "Spanish"
+    tts_code: "es"
+    enabled: false
+  ar:
+    name: "Arabic"
+    tts_code: "ar"
+    enabled: false

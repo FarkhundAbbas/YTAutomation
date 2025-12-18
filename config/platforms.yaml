@@ -1,0 +1,22 @@
+custom_channels:
+- key: abc***
+  name: '@demo_mocked'
+  platform: tiktok
+- key: N/A
+  name: '@sleepandrelax1500'
+  platform: youtube
+- key: N/A
+  name: '@sleepandrelax1500'
+  platform: youtube
+- key: N/A
+  name: '@sleepandrelax1500'
+  platform: youtube
+platforms:
+  facebook:
+    enabled: false
+  tiktok:
+    enabled: true
+    session_id: YOUR_SESSION_ID
+  youtube:
+    auth_file: credentials/youtube_auth.json
+    enabled: true

@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: logdoctor-postgres
+    environment:
+      POSTGRES_USER: logdoctor
+      POSTGRES_PASSWORD: logdoctor123
+      POSTGRES_DB: logdoctor
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U logdoctor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: logdoctor-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: .
+      dockerfile: services/api-gateway/Dockerfile
+    container_name: logdoctor-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://logdoctor:logdoctor123@postgres:5432/logdoctor
+      - REDIS_URL=redis://redis:6379
+      - DETECTOR_URL=http://detector:8002
+      - INFERER_URL=http://inferer:8003
+      - VALIDATOR_URL=http://validator:8004
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: python -m services.api-gateway.main
+
+  # Detector Service
+  detector:
+    build:
+      context: .
+      dockerfile: services/detector/Dockerfile
+    container_name: logdoctor-detector
+    ports:
+      - "8002:8002"
+    environment:
+      - DATABASE_URL=postgresql://logdoctor:logdoctor123@postgres:5432/logdoctor
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python -m services.detector.main
+
+  # Inferer Service
+  inferer:
+    build:
+      context: .
+      dockerfile: services/inferer/Dockerfile
+    container_name: logdoctor-inferer
+    ports:
+      - "8003:8003"
+    environment:
+      - DATABASE_URL=postgresql://logdoctor:logdoctor123@postgres:5432/logdoctor
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python -m services.inferer.main
+
+  # Validator Service
+  validator:
+    build:
+      context: .
+      dockerfile: services/validator/Dockerfile
+    container_name: logdoctor-validator
+    ports:
+      - "8004:8004"
+    environment:
+      - DATABASE_URL=postgresql://logdoctor:logdoctor123@postgres:5432/logdoctor
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python -m services.validator.main
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: logdoctor-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+
+volumes:
+  postgres_data:
